@@ -57,3 +57,23 @@
     - Select Upload a .ZIP file and attach the downloaded zipped file.
     - Create a new role from template, name it and set permission to `S3 Object read-only permission`.
   - Confirm and test, you should be good to go!
+
+## Options:
+  - If you need to add more resizing variants, follow the format:
+    ```
+    var _half = {
+      command: "scale",
+      max_width: 0.5,
+      max_height: 0.5,
+      version: "large"
+    }
+    ```
+  - Accepts 2 commands - `scale` or `fixed`:
+    - `scale` shrinks the image by a percentage (decimal).
+    - `fixed` just crops the image into the set size (pixels).
+
+## References:
+  - Original tutorial [here](https://medium.com/wolox-driving-innovation/image-processing-in-rails-using-aws-lambda-43b5b268019f#.1zgikak33)
+  - Sharp's API [here](http://sharp.dimens.io/en/stable/api/).
+  
+## I'm not the greatest at programming, if you can refactor, offer criticism, or improve on the code, let me know! : )

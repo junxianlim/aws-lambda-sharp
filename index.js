@@ -64,6 +64,12 @@ exports.handler = function(event, context) {
                                .png()
                                .toBuffer();
                  case "fixed":
+                    var width = _sizesArray[key].max_width
+                    var height = _sizesArray[key].max_height
+
+                    return image.resize(width, height)
+                                .png()
+                                .toBuffer();
                }
              })
              .then(function(data) {
