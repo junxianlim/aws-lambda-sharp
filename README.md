@@ -75,5 +75,5 @@
 ## References:
   - Original tutorial [here](https://medium.com/wolox-driving-innovation/image-processing-in-rails-using-aws-lambda-43b5b268019f#.1zgikak33)
   - Sharp's API [here](http://sharp.dimens.io/en/stable/api/).
-  
-## I'm not the greatest at programming, if you can refactor, offer criticism, or improve on the code, let me know! : )
+
+#### I'm not the greatest at programming, if you can refactor, offer criticism, or improve on the code, let me know! : )
