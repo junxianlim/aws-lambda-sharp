@@ -19,7 +19,6 @@ exports.handler = function(event, context) {
   var extension = path.extname(dstKey);
   var filename  = path.basename(dstKey, extension);
   var directory = path.dirname(dstKey);
-  console.log('Dumping resized file to: ' + dstKey);
 
   // Infer the image type.
   var typeMatch = srcKey.match(/\.([^.]*)$/);
@@ -41,7 +40,6 @@ exports.handler = function(event, context) {
 
   // Download the image from S3, transform, and upload.
   async.eachOf(_sizesArray, function(value, key, callback) {
-    console.log(key)
     async.waterfall([
       function download(next) {
         // Download the image from S3 into a buffer.
@@ -52,7 +50,8 @@ exports.handler = function(event, context) {
         next);
       },
       function transform(response, next) {
-        var image = sharp(response.Body)
+
+        var image = sharp(response.Body);
         image.metadata()
              .then(function(metadata) {
                switch(_sizesArray[key].command) {
@@ -61,15 +60,13 @@ exports.handler = function(event, context) {
                    var height = Math.round(_sizesArray[key].max_height * metadata.height);
 
                    return image.resize(width, height)
-                               .png()
-                               .toBuffer();
+                               .toBuffer()
                  case "fixed":
-                    var width = _sizesArray[key].max_width
-                    var height = _sizesArray[key].max_height
+                    var width = _sizesArray[key].max_width;
+                    var height = _sizesArray[key].max_height;
 
                     return image.resize(width, height)
-                                .png()
-                                .toBuffer();
+                                .toBuffer()
                }
              })
              .then(function(data) {
@@ -80,7 +77,7 @@ exports.handler = function(event, context) {
              })
       },
       function upload(data, key, next) {
-        var resized_version = _sizesArray[key].version
+        var resized_version = _sizesArray[key].version;
         dstKey = directory + '/' + resized_version + "/" + resized_version  + "_" + filename + extension;
 
         s3.putObject({
