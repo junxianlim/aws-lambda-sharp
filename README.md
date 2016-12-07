@@ -33,33 +33,45 @@
 
 ## Setup:
   - Spin up a new AWS EC2 Micro Instance (free) and SSH into server - [Documentation](http://docs.aws.amazon.com/AWSEC2/latest/UserGuide/AccessingInstancesLinux.html).
+
   - Install dependences:
+
     ```
     curl -s https://rpm.nodesource.com/setup_4.x | sudo bash -
     sudo yum install -y gcc-c++ nodejs
     ```
+
   - Clone Project and `npm i sharp async`.
+
   - Compress `node_modules` and `index.js` into a zip file.
+
     ```
     zip -ur9 aws-sharp.zip index.js node_modules
     ```
+
   - Download the zipped file into your local machine. (Type on your local terminal)
+
     ```
     scp -i your.pem your-ec2-instance:/home/ec2-user/aws-sharp.zip ~/your-local-folder
     ```
+
   - Spin up a new AWS lambda instance and select `configure trigger` option.
+
   - Select S3 and relevant bucket with the following options:
     - Event Type: Object Created (All)
     - Prefix: Your prefixed folder, default is set at `uploads/originals`
     - Tick `enable trigger`
+
   - Select `configure function` next.
     - Fill in `*` details.
     - Select Upload a .ZIP file and attach the downloaded zipped file.
     - Create a new role from template, name it and set permission to `S3 Object read-only permission`.
+
   - Confirm and test, you should be good to go!
 
 ## Options:
   - If you need to add more resizing variants, follow the format:
+
     ```
     var _half = {
       command: "scale",
@@ -68,6 +80,7 @@
       version: "large"
     }
     ```
+
   - Accepts 2 commands - `scale` or `fixed`:
     - `scale` shrinks the image by a percentage (decimal).
     - `fixed` just crops the image into the set size (pixels).
